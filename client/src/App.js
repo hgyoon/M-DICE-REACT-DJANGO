@@ -2,23 +2,31 @@ import React, {useState} from 'react';
 //// for integration with python
 import axios from 'axios';
 import Street from './Street.jsx';
+import PersistentDrawerRight from './Drawer.jsx';
+import Button from '@material-ui/core/Button';
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import './App.css';
 
 function App() {
-
+  const defaultCenter = {
+    lat: 42.35, lng: -83.0457538
+  }
+  const [state, setState] = useState({
+    url: '',
+    selected: {},
+    center: defaultCenter,
+  });
+  const [center, setCenter] = useState(defaultCenter);
   const [url, setUrl] = useState('');
   const [selected, setSelected] = useState({});
+
+  var locationArray = [];
 
   const mapStyles = {        
     height: "100vh",
     width: "100%"};
   
-  const defaultCenter = {
-    lat: 42.35, lng: -83.0457538
-  }
-
-  const [center, setCenter] = useState(defaultCenter);
+  
 
   const locations = [
     {
@@ -41,6 +49,7 @@ function App() {
   const onSelect = item => {
     setSelected(item);
     setCenter({lat: item.location.lat, lng: item.location.lng});
+    console.log('setCentered');
   }
 
   function displayMarkers(){
@@ -70,12 +79,6 @@ function App() {
 
   return (
     <div className="App">
-        <form onSubmit = {handleSubmit}>
-          <label>
-            url: <input type = "text" name="url" value = {url} onChange = {e => setUrl(e.target.value)}></input>
-          </label>
-          <input type = "submit" value = "CHECK" />
-        </form>
       <LoadScript
        googleMapsApiKey='AIzaSyAEthE8cXJYTabbM5WNNkbE1J3jWIvMDoU'>
         <GoogleMap
@@ -95,12 +98,20 @@ function App() {
                 <div>
                   <Street mapKey = {selected.mapKey}/>
                   <p>{selected.name}</p>
+                  <Button variant="contained" color="primary" onClick={() => console.log("SAVED!")}>SAVE</Button>
                 </div>
               </InfoWindow>
             )
           }
         </GoogleMap>
      </LoadScript>
+     <form onSubmit = {handleSubmit}>
+          <label>
+            Send message to backend: <input type = "text" name="url" value = {url} onChange = {e => setUrl(e.target.value)}></input>
+          </label>
+          <input type = "submit" value = "Send Message" />
+     </form>
+     <PersistentDrawerRight/>
     </div>
   );
 }

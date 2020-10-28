@@ -11,13 +11,14 @@ import os
 # Create your views here.
 @csrf_exempt
 def m_dice(request):
-    try:
-        url_status = urllib.request.urlopen(request.body.decode("utf-8")).getcode()
-    except:
-        return HttpResponse("URL IS NOT WORKING")
-    if (url_status == 200):
-        return HttpResponse("URL IS WORKING!")
-    return HttpResponse("URL IS NOT WORKING")
+    # try:
+    #     url_status = urllib.request.urlopen(request.body.decode("utf-8")).getcode()
+    # except:
+    #     return HttpResponse("URL IS NOT WORKING")
+    # if (url_status == 200):
+    #     return HttpResponse("URL IS WORKING!")
+    # return HttpResponse("URL IS NOT WORKING")
+    return HttpResponse("hello!!")
 
 class FrontendAppView(View):
     """
