@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from m_dice.views import m_dice, FrontendAppView
+from m_dice.views import m_dice, FrontendAppView, get_geoid
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('m_dice', m_dice),
+    path('get_geoid', get_geoid),
     url(r'^', FrontendAppView.as_view()),
 ]

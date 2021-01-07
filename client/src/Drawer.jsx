@@ -19,6 +19,10 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import DiscreteSlider from './Slider.jsx';
+import Trigger from './trigger';
+import ReactMapillary from './reactMapillary';
+import CommentList from './CommentList';
+
 
 const drawerWidth = 300;
 
@@ -53,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
       width: drawerWidth,
     },
+    drawerPaperRight: {
+      width: '40%',
+    },
     drawerHeader: {
       display: 'flex',
       alignItems: 'center',
@@ -83,6 +90,7 @@ export default function PersistentDrawerRight(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [comments, setComments] = React.useState([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,23 +104,25 @@ export default function PersistentDrawerRight(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+        color = "#263238"
         position="fixed"
-        color = "inherit"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap className={classes.title}>M-DICE Pavement Project</Typography>
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            edge="end"
             onClick={handleDrawerOpen}
-            className={clsx(open && classes.hide)}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
           </IconButton>
+          <Typography variant="h6" noWrap>
+            M-DICE Pavement Project
+          </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -126,7 +136,7 @@ export default function PersistentDrawerRight(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
@@ -149,6 +159,39 @@ export default function PersistentDrawerRight(props) {
             </ListItem>
           ))}
         </List>
+        <Divider />
+        <Trigger value={props.value} onChange={props.onChange}/>
+      </Drawer>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="right"
+        open={props.openRight}
+        classes={{
+          paper: classes.drawerPaperRight,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={() => props.handleOpenRight(false)}>
+            {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        {props.openRight && <div>
+          <ReactMapillary
+          imgKey = 'PFlijO8zai9nqWeU4dBuE5'
+          visible = {props.openRight}
+          setMarkerGeoCode = {props.setMarkerGeoCode}
+          />
+          <h3>Identifier:</h3>
+          <h3>Address:</h3>
+          <h3>Summary Data:</h3>
+          <h3>Pavement Image:</h3>
+          <CommentList
+            comments = {comments}
+            setComments = {setComments}
+          />
+        </div>
+        }
       </Drawer>
     </div>
   );

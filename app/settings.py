@@ -120,6 +120,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = 'static'
+
 STATIC_URL = '/static/'
 
 REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
