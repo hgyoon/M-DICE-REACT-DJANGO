@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import AppMap from './Base';
+import DrawerMap from './Root';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
@@ -10,7 +11,8 @@ ReactDOM.render(
   //   {/* <App /> */}
   //   <AppMap/>
   // </React.StrictMode>,
-  <AppMap/>,
+  //<AppMap/>,
+  <DrawerMap/>,
   document.getElementById('root')
 );
 
