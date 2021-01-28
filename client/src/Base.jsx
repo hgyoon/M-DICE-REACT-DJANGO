@@ -1,3 +1,5 @@
+/* global google */
+
 import React from 'react';
 import {
   withScriptjs,
@@ -5,12 +7,10 @@ import {
   GoogleMap,
   Polyline,
   Marker,
-  Polygon,
 } from 'react-google-maps';
 import axios from 'axios';
 import PersistentDrawerRight from './Drawer.jsx';
 import MapDirectionsRenderer from './MapDirectionsRenderer';
-import ReactMapillary from './reactMapillary';
 import Trigger from './trigger';
 import InnerBorder from './innerBorder';
 import Border from './border';
@@ -24,12 +24,12 @@ function colorParser(color){
   var colorGreen = '#2E7D32';
   var colorLGreen = '#8BC34A';
   var colorGray = '#757575';
-  if (color == "red"){return colorRed;}
-  else if (color == "orange"){return colorOrange;}
-  else if (color == "yellow"){return colorYellow;}
-  else if (color == "green"){return colorGreen;}
-  else if (color == "light_green"){return colorLGreen;}
-  else if (color == "gray"){return colorGray;}
+  if (color === "red"){return colorRed;}
+  else if (color === "orange"){return colorOrange;}
+  else if (color === "yellow"){return colorYellow;}
+  else if (color === "green"){return colorGreen;}
+  else if (color === "light_green"){return colorLGreen;}
+  else if (color === "gray"){return colorGray;}
   else{
     console.log("invalid input", color);
     return "#000000";
@@ -63,13 +63,23 @@ const Map = withScriptjs(
               onClick = {() => props.setOpenRight(true)}
               options = {{
                 strokeColor: colorParser(pos['color']),
-                strokeOpacity: 0.4,
-                strokeWeight: 2,
+                strokeOpacity: 1,
+                strokeWeight: 3,
               }}
+              onMouseOver = {() => console.log('in')}
+              onMouseOut = {() => console.log('out')}
             />
             )
           })
         }
+        {/* {
+          google.maps.event.addListener(polylinePath, 'mouseover', function(latlng) {
+            polylinePath.setOptions({strokeColor: '#00FFAA'})})
+        }
+        {
+          google.maps.event.addListener(polylinePath, 'mouseout', function(latlng) {
+            polylinePath.setOptions({strokeColor: '#FF0000'})})
+        } */}
         {/* {
           props.streets && <Polyline
             onClick = {() => props.setOpenRight(true)}
@@ -84,12 +94,19 @@ const Map = withScriptjs(
         {
           props.openRight ? 
           <Marker 
-          icon={{
-            url: "https://img.icons8.com/fluent/48/000000/car.png",
-            scale: 5.0,
-            }}
+          // icon={{
+          //   path: "M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z",
+          //   scale: 2,
+          //   rotation: props.rotation,
+          // }}
+          
+          // icon= {{
+          //   path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          //   scale: 4,
+          //   rotation: props.rotation,
+          // }}
           position={props.markerGeoCode}
-          />:<h1></h1>
+          />:""
         }
         <Border/>
         <InnerBorder/>
@@ -120,6 +137,7 @@ const AppMap = () => {
     const [test, setTest] = useState(0);
     const [openRight, setOpenRight] = useState(false);
     const [markerGeoCode, setMarkerGeoCode] = useState({lat: 0, lng: 0});
+    const [rotation, setRotation] = useState(0);
 
     function handleTrigger(newVal){
       setStreets(newVal);
@@ -165,6 +183,8 @@ const AppMap = () => {
         openRight = {openRight} 
         handleOpenRight = {setOpenRight}
         setMarkerGeoCode = {setMarkerGeoCode}
+        setRotation = {setRotation}
+        rotation = {rotation}
       />
       <Map
         googleMapURL={
@@ -183,9 +203,8 @@ const AppMap = () => {
         openRight = {openRight}
         setOpenRight = {setOpenRight}
         markerGeoCode = {markerGeoCode}
+        rotation = {rotation}
       />
-    
-     {/* <ReactMapillary/> */}
      </div>
     );
 };

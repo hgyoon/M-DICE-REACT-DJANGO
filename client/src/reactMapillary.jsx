@@ -8,6 +8,11 @@ export const ReactMapillary = (props) => {
       setVisible(!visible);
     }
   };
+  function rotationSetter(bearing){
+    if (Math.abs(props.rotation-bearing) >= 90){
+      props.setRotation(bearing);
+    }
+  }
   return (
     <div
       onKeyDown={handleKeyDown}
@@ -23,10 +28,22 @@ export const ReactMapillary = (props) => {
           clientId="QjI1NnU0aG5FZFZISE56U3R5aWN4Zzo3NTM1MjI5MmRjODZlMzc0"
           imageKey= {props.imgKey}
           filter={['==', 'userKey', '2PiRXqdqbY47WzG6CRzEIA']}
-          onTiltChanged={tilt => console.log(`Tilt: ${tilt}`)}
-          onFovChanged={fov => console.log(`FoV: ${fov}`)}
-          onNodeChanged={node => {console.log(node.latLon); props.setMarkerGeoCode({lat: node.latLon.lat, lng: node.latLon.lon})}}
-          onBearingChanged={bearing => console.log(`Bearing: ${bearing}`)}
+          // onTiltChanged={tilt => {
+          //   console.log(`Tilt: ${tilt}`)}
+          // }
+          // onFovChanged={
+          //   fov => console.log(`FoV: ${fov}`)
+          // }
+          onNodeChanged={
+            node => {
+              // console.log(node.latLon); 
+              props.setMarkerGeoCode({lat: node.latLon.lat, lng: node.latLon.lon})}
+          }
+          onBearingChanged={
+            bearing => {
+              // console.log(`Bearing: ${bearing}`); 
+              rotationSetter(bearing)}
+          }
         />
         }
     </div>

@@ -8,8 +8,8 @@ export const Border = (props) => {
     return(
         <Polygon
           path={[
-            { lat: 42.286897, lng :-83.098183},
-            { lat: 42.289572, lng :-83.118074},
+            { lat: 42.286897, lng :-83.098183 },
+            { lat: 42.289572, lng :-83.118074 },
             { lat: 42.287215, lng :-83.119683 },
             { lat: 42.279023, lng :-83.117280 },
             { lat: 42.280262, lng :-83.129253 },
@@ -109,7 +109,7 @@ export const Border = (props) => {
           ]}
           options = {{
             strokeColor: '#FF3D00',
-            strokeWeight: 1,
+            strokeWeight: 1.5,
             fillColor: '#FFFFFF',
             fillOpacity: 0.1,
           }}

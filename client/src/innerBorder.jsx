@@ -26,7 +26,8 @@ export const InnerBorder = (props) => {
           options = {{
             strokeColor: '#FF3D00',
             strokeWeight: 1,
-            fillOpacity: 0,
+            fillColor: "#808080",
+            fillOpacity: 0.2,
           }}
         />
     )

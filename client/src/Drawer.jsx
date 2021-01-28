@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+      height:'5%',
     },
     appBarShift: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -104,7 +105,6 @@ export default function PersistentDrawerRight(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        color = "#263238"
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -181,6 +181,8 @@ export default function PersistentDrawerRight(props) {
           imgKey = 'PFlijO8zai9nqWeU4dBuE5'
           visible = {props.openRight}
           setMarkerGeoCode = {props.setMarkerGeoCode}
+          rotation = {props.rotation}
+          setRotation = {props.setRotation}
           />
           <h3>Identifier:</h3>
           <h3>Address:</h3>
